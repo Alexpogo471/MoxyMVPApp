@@ -8,8 +8,7 @@ data class Data(@SerializedName("name")
                 val name:String,
                 @SerializedName("data")
                 @Expose
-                val data: DataInData,
-                @SerializedName("newKey")
-                @Expose
-                val newKey: Boolean) {
+                val data: DataInData)
+                {
+
 }

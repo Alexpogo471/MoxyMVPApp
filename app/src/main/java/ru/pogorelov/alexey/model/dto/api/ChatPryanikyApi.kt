@@ -1,10 +1,11 @@
-package ru.pogorelov.alexey.model.dto
+package ru.pogorelov.alexey.model.dto.api
 
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import ru.pogorelov.alexey.model.dto.JsonObject
 
 interface ChatPryanikyApi {
 
@@ -14,7 +15,7 @@ interface ChatPryanikyApi {
 
     companion object Factory{
 
-        fun create():ChatPryanikyApi{
+        fun create(): ChatPryanikyApi {
 
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
