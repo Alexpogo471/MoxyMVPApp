@@ -2,15 +2,18 @@ package ru.pogorelov.alexey.view.activity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import ru.pogorelov.alexey.R
 import ru.pogorelov.alexey.presenter.MainPresenter
 import ru.pogorelov.alexey.view.MainView
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     val TAG = "TestLoadData"
-    private val presenter: MainPresenter = MainPresenter(this)
+
+    @InjectPresenter
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

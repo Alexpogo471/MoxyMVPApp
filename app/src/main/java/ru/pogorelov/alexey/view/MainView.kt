@@ -1,6 +1,8 @@
 package ru.pogorelov.alexey.view
 
-interface MainView {
+import com.arellomobile.mvp.MvpView
+
+interface MainView : MvpView{
 
     fun showData(it:String)
     fun showError()
