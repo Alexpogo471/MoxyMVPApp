@@ -10,5 +10,4 @@ data class Data(@SerializedName("name")
                 @Expose
                 val data: DataInData)
                 {
-
 }

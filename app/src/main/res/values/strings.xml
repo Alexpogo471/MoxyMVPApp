@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MoxyMVPApp</string>
     <string name="iv_picture">picture</string>
+    <string name="imageOfJson">ImageOfJson</string>
 </resources>
+
+
