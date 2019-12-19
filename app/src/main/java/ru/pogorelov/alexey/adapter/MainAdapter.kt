@@ -1,6 +1,5 @@
-package ru.pogorelov.alexey
+package ru.pogorelov.alexey.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import ru.pogorelov.alexey.R
 import ru.pogorelov.alexey.model.dto.Variant
 
 class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,7 +30,10 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // data for "selector"
     var selectedId: Int = 0
+    var id :Int = 0
     var variants: List<Variant> = ArrayList()
+
+
 
     private val HZ_VIEW_TYPE: Int = 0
     private val PICTURE_VIEW_TYPE: Int = 1
@@ -46,12 +49,17 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.i("TestLoadData", "onCreateViewHolder")
         return when (viewType) {
-            HZ_VIEW_TYPE -> TextHolder(LayoutInflater.from(parent.context).inflate(R.layout.text_item, parent, false),text)
-            PICTURE_VIEW_TYPE -> PictureHolder(LayoutInflater.from(parent.context).inflate(R.layout.picture_item, parent, false),textHead,url)
-            SELECTOR_VIEW_TYPE -> SelectorHolder(LayoutInflater.from(parent.context).inflate(R.layout.selector_item, parent, false),selectedId,variants)
-            else -> TextHolder(LayoutInflater.from(parent.context).inflate(R.layout.text_item, parent, false),text)
+            HZ_VIEW_TYPE -> TextHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.text_item, parent, false), text, nameForHz)
+
+            PICTURE_VIEW_TYPE -> PictureHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.picture_item, parent, false), textHead, url, nameForPicture)
+
+            SELECTOR_VIEW_TYPE -> SelectorHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.selector_item, parent, false), selectedId, variants, nameForSelector)
+            else -> TextHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.text_item, parent,false), text, nameForHz)
         }
     }
 
@@ -59,33 +67,32 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = view.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.i("TestLoadData", "onBindViewHolder")
         when (holder) {
             is TextHolder -> holder.nameForHz == view[position]
             is PictureHolder -> holder.nameForPicture == view[position]
             is SelectorHolder -> holder.nameForSelector == view[position]
         }
-
-
     }
 
+
+
+
     // holder for "hz"
-    class TextHolder(itemView: View,var text: String,var nameForHz: String = "hz") : RecyclerView.ViewHolder(itemView) {
+    class TextHolder(itemView: View,var text: String,var nameForHz: String) : RecyclerView.ViewHolder(itemView) {
+
         init {
-            Log.i("TestLoadData", "TextHolder")
             val text = itemView.findViewById<TextView>(R.id.tv_1)
             text.text = this.text
 
         }
 
+
     }
 
     // holder for "picture"
-    class PictureHolder(itemView: View,var textHead: String,var url : String,var nameForPicture:String = "picture") : RecyclerView.ViewHolder(itemView) {
-
+    class PictureHolder(itemView: View,var textHead: String,var url : String,var nameForPicture:String) : RecyclerView.ViewHolder(itemView) {
 
         init {
-            Log.i("TestLoadData", "PictureHolder")
             val image = itemView.findViewById<ImageView>(R.id.imageView)
             val text = itemView.findViewById<TextView>(R.id.tv_head)
             text.text = this.textHead
@@ -95,14 +102,13 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     // holder for "selector"
-    class SelectorHolder(itemView: View,var selectedId: Int,var variants: List<Variant>,var nameForSelector:String = "selector") : RecyclerView.ViewHolder(itemView) {
-
+    class SelectorHolder(itemView: View,var selectedId: Int,var variants: List<Variant>,var nameForSelector:String) : RecyclerView.ViewHolder(itemView) {
 
         init {
-            Log.i("TestLoadData", "SelectorHolder")
             val r_btn0 = itemView.findViewById<RadioButton>(R.id.r_btn0)
             val r_btn1 = itemView.findViewById<RadioButton>(R.id.r_btn1)
             val r_btn2 = itemView.findViewById<RadioButton>(R.id.r_btn2)
+
 
             r_btn0?.text = this.variants[0].text
             r_btn1?.text = this.variants[1].text
@@ -135,11 +141,13 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setDataSelector(nameForSelector: String,selectedId: Int, variants: List<Variant>){
+    fun setDataSelector(nameForSelector: String,selectedId: Int, variants: List<Variant>,id: Int){
         this.nameForSelector = nameForSelector
         this.selectedId = selectedId
         this.variants = variants
+        this.id = id
         notifyDataSetChanged()
     }
+
 
 }
